@@ -4,12 +4,12 @@
 <link rel="import" href="../polymer-ajax/polymer-ajax.html">
 
 <polymer-element name="polymer-chart-builder" 
-         extends="polymer-ajax" 
-         attributes="dataUrl"
-         on-polymer-response="{{responseHandler}}">
+         		 extends="polymer-ajax" 
+         		 attributes="url">
 
   <script>
     Polymer('polymer-chart-builder', {
+    //	params: '{"alt": "json", "q": "chrome"}',
         handleAs: 'json',
         auto: true,
     });

@@ -2,63 +2,68 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../polymer-ajax/polymer-ajax.html">
 <link rel="import" href="polymer-chart-builder.html">
+<link rel="import" href="polymer-chart-container.html">
 
 <polymer-element name="polymer-bar-chart" 
                  extends="polymer-chart-builder"
                  on-polymer-response="{{responseHandler}}"
-                 dataUrl>
+                 attributes="url">
+  <template>
+  	<polymer-chart-container id="chart"></polymer-chart-container>
+
+  </template>
   <script>
     Polymer('polymer-bar-chart', {
         responseHandler: function(e, resp) {
-          console.log(e);
-          console.log(resp);
-        }
+          	console.log("the callback function is called after response received");
+          	console.log(resp);
+          	console.log(this.$.chart);
+          	var c = new Highcharts.Chart(this.chartOptions);
+        },
+        chartOptions: {
+	        chart: {
+	            type: 'column',
+	            renderTo: 'time_sent'
+	        },
+	        title: "",
+	        xAxis: {
+	            min: 0,
+	            max: 23,
+	            categories: ['0시', '1시', '2시', '3시', '4시', '5시', '6시', '7시', '8시','9시','10시','11시','12시','13시','14시','15시','16시','17시','18시','19시','20시','21시','22시','23시']
+	        },
+	        yAxis: {
+	            title: "",
+	            min: 0
+	        },
+	        tooltip: {
+	            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                '<td style="padding:0"><b>{point.y} 건</b></td></tr>',
+	            footerFormat: '</table>',
+	            shared: true,
+	            useHTML: true
+	        },
+	        legend: {
+	            layout: 'vertical',
+	            align: 'right',
+	            verticalAlign: 'middle',
+	            borderWidth: 0
+	        }
+	    }
     });
 
-
-
+	// Taken from visualization.js of the former dashboard
+	var barChartDataHandler = function(inArr) {
+		var resultArr = [], i, item;
+		for (i = 0; i < inArr.length; i++) {
+			item = {};
+			item["data"] = inArr[i].count;
+			item.name = inArr[i].name;
+			resultArr.push(item);
+		}
+		return resultArr;
+	};
   </script>
 </polymer-element>
-
-
-
-
-<!--
-
-<polymer-element name="polymer-bar-chart" dataUrl template-name auto>
-	<template id="template-{{template-name}}">
-		<polymer-ajax {{auto}} data="{{dataUrl}}" id="ajax-{{template-name}}"></polymer-ajax>
-	</template>
-	<script>
-		Polymer('polymer-bar-chart', {
-			dataUrl: '',
-			template-name: '',
-			auto: false,
-			autoChanged: function() { this.autoGo(); },
-			autoGo: function() {
-				if (this.auto)
-					this.goJob = this.job(this.goJob, this.go, 0);
-			}
-			
-		})
-
-		// Taken from visualization.js of the former dashboard
-		var barChartDataHandler = function(inArr) {
-			var resultArr = [], i, item;
-			for (i = 0; i < inArr.length; i++) {
-				item = {};
-				item["data"] = inArr[i].count;
-				item.name = inArr[i].name;
-				resultArr.push(item);
-			}
-			return resultArr;
-		};
-
-
-	</script>
-</polymer-element>
-
-
---!>
 
 

@@ -2,17 +2,16 @@
 <html>
 <head>
 	<title>polymer-highcharts</title>
-	<script src="bower_components/platform/platform.js">
-	<link rel="import" href="polymer-highcharts.html">
+	<script src="bower_components/platform/platform.js"></script>
+	<link rel="import" href="bower_components/polymer-highcharts/polymer-highcharts.html">
 </head>
 <body>
 
-	<polymer-bar-chart dataUrl="http://localhost:3000/">
-
-	</polymer-highcharts>
+	<polymer-bar-chart url="http://localhost:3000/"></polymer-bar-chart>
 
 	<script>
 		document.addEventListener('WebComponentsReady', function() {
+			console.log("Now Ready");
 
 		});
 
