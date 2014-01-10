@@ -7,23 +7,26 @@
 <polymer-element name="polymer-bar-chart" 
                  extends="polymer-chart-builder"
                  on-polymer-response="{{responseHandler}}"
-                 attributes="url">
+                 attributes="url uid"
+                 lightdom>
   <template>
-  	<polymer-chart-container id="chart"></polymer-chart-container>
+  	<polymer-chart-container uid="container-{{id}}"></polymer-chart-container>
 
   </template>
   <script>
     Polymer('polymer-bar-chart', {
+    	id: '',
         responseHandler: function(e, resp) {
           	console.log("the callback function is called after response received");
           	console.log(resp);
-          	console.log(this.$.chart);
+          	console.log(this.$);
+          	console.log(document.getElementById("#container-{{id}}"));
           	var c = new Highcharts.Chart(this.chartOptions);
         },
         chartOptions: {
 	        chart: {
 	            type: 'column',
-	            renderTo: 'time_sent'
+	            renderTo: document.getElementById("#container-{{id}}")
 	        },
 	        title: "",
 	        xAxis: {
