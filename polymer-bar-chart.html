@@ -1,0 +1,64 @@
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-ajax/polymer-ajax.html">
+<link rel="import" href="polymer-chart-builder.html">
+
+<polymer-element name="polymer-bar-chart" 
+                 extends="polymer-chart-builder"
+                 on-polymer-response="{{responseHandler}}"
+                 dataUrl>
+  <script>
+    Polymer('polymer-bar-chart', {
+        responseHandler: function(e, resp) {
+          console.log(e);
+          console.log(resp);
+        }
+    });
+
+
+
+  </script>
+</polymer-element>
+
+
+
+
+<!--
+
+<polymer-element name="polymer-bar-chart" dataUrl template-name auto>
+	<template id="template-{{template-name}}">
+		<polymer-ajax {{auto}} data="{{dataUrl}}" id="ajax-{{template-name}}"></polymer-ajax>
+	</template>
+	<script>
+		Polymer('polymer-bar-chart', {
+			dataUrl: '',
+			template-name: '',
+			auto: false,
+			autoChanged: function() { this.autoGo(); },
+			autoGo: function() {
+				if (this.auto)
+					this.goJob = this.job(this.goJob, this.go, 0);
+			}
+			
+		})
+
+		// Taken from visualization.js of the former dashboard
+		var barChartDataHandler = function(inArr) {
+			var resultArr = [], i, item;
+			for (i = 0; i < inArr.length; i++) {
+				item = {};
+				item["data"] = inArr[i].count;
+				item.name = inArr[i].name;
+				resultArr.push(item);
+			}
+			return resultArr;
+		};
+
+
+	</script>
+</polymer-element>
+
+
+--!>
+
+

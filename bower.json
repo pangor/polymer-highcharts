@@ -1,0 +1,26 @@
+{
+  "name": "polymer-highcharts",
+  "version": "0.0.0",
+  "description": "A wrapper library for Highcharts charts/graphs. Create custom HTML elemnts for each respective chart elements in Highcharts library.",
+  "keywords": [
+    "polymer",
+    "charts",
+    "highcharts"
+  ],
+  "authors": [
+    "Arif Jafer"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/zeronone/polymer-highcharts",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}

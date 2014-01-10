@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>polymer-highcharts</title>
+	<script src="bower_components/platform/platform.js">
+	<link rel="import" href="polymer-highcharts.html">
+</head>
+<body>
+
+	<polymer-highcharts url="http://localhost:9000/admin-api/data">
+		<template repeat="{{response.feed.entry}}">
+			// TODO
+		</template>
+	</polymer-highcharts>
+
+	<script>
+		document.addEventListener('WebComponentsReady', function() {
+			var ajax = document.getSelector("polymer-highcharts");
+			ajax.addEventListener("polymer-response", 
+				function(e) {
+					document.querySelector('template').model = {
+						response: e.detail.response
+					};
+				});
+		});
+
+
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+

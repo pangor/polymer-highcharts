@@ -1,0 +1,21 @@
+
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../polymer-ajax/polymer-ajax.html">
+
+<polymer-element name="polymer-chart-builder" 
+         extends="polymer-ajax" 
+         attributes="dataUrl"
+         on-polymer-response="{{responseHandler}}">
+
+  <script>
+    Polymer('polymer-chart-builder', {
+        handleAs: 'json',
+        auto: true,
+    });
+  </script>
+</polymer-element>
+
+
+
+
