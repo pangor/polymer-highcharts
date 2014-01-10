@@ -2,31 +2,44 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../polymer-ajax/polymer-ajax.html">
 <link rel="import" href="polymer-chart-builder.html">
-<link rel="import" href="polymer-chart-container.html">
 
 <polymer-element name="polymer-bar-chart" 
                  extends="polymer-chart-builder"
                  on-polymer-response="{{responseHandler}}"
-                 attributes="url uid"
-                 lightdom>
+                 attributes="url">
   <template>
-  	<polymer-chart-container uid="container-{{id}}"></polymer-chart-container>
+  	<div id="chartContainer">
+
+  	</div>
 
   </template>
   <script>
     Polymer('polymer-bar-chart', {
-    	id: '',
+    	chart: null,
+    	data: null,
         responseHandler: function(e, resp) {
-          	console.log("the callback function is called after response received");
-          	console.log(resp);
+        	var opts = this.chartOptions;
+          	opts.chart.renderTo = this.$.chartContainer;
+          	this.chart = new Highcharts.Chart(opts);
           	console.log(this.$);
-          	console.log(document.getElementById("#container-{{id}}"));
-          	var c = new Highcharts.Chart(this.chartOptions);
+            this.updateChartData(this.chart, this.dataHandler(resp.response));
+        },
+        // Taken from old Dashboard's visualization.js
+        // <--- 지정한 차트의 데이터 업데이트를 위한 Function
+        // HighCharts update
+        updateChartData : function(chart, data) {
+            while( chart.series.length > 0 ) {      // is one or mores series of data
+                chart.series[0].remove( false );    // false avoids redrawing (Series.remove)
+            }
+            $.each(data, function(i){
+                chart.addSeries(data[i], false);    // false avoids redrawing
+            });
+            chart.redraw();
         },
         chartOptions: {
 	        chart: {
 	            type: 'column',
-	            renderTo: document.getElementById("#container-{{id}}")
+	            renderTo: ""         // Should be filled
 	        },
 	        title: "",
 	        xAxis: {
@@ -52,11 +65,8 @@
 	            verticalAlign: 'middle',
 	            borderWidth: 0
 	        }
-	    }
-    });
-
-	// Taken from visualization.js of the former dashboard
-	var barChartDataHandler = function(inArr) {
+	    },
+	    dataHandler : function(inArr) {
 		var resultArr = [], i, item;
 		for (i = 0; i < inArr.length; i++) {
 			item = {};
@@ -65,7 +75,11 @@
 			resultArr.push(item);
 		}
 		return resultArr;
-	};
+		}
+    });
+
+	// Taken from visualization.js of the former dashboard
+
   </script>
 </polymer-element>
 
